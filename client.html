@@ -14,20 +14,21 @@
 
       <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
       <script type="text/javascript">
-         var server_name = 'localhost';
+         //var server_name = 'http://localhost/php/server.php';
+         var server_name = 'http://127.0.0.1:1337/log.txt';
          var last_data = "";
 
          function poll_page(){
                console.log('polling');
                $.ajax({
-                     url: 'http://' + server_name + '/php/server.php'
+                     url: server_name
                   }).done(function(data){
                      if (last_data !== data) {
                            $('#main').html(data);
                            last_data = data;
                         }
 
-                        setTimeout(poll_page, 1000);
+                        setTimeout(poll_page, 100);
                });
          }
          $(function(){
