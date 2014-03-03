@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Long polling client</title>
+      <style type="text/css">
+         html, body { height: 100%; width: 100%; background-color: black; }
+         #main { height: 99%; width: 99%; background-color: white; margin auto; }
+      </style>
+   </head>
+   <body>
+
+      <div id="main"></div>
+
+      <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script type="text/javascript">
+         var server_name = 'localhost';
+         var last_data = "";
+
+         function poll_page(){
+               console.log('polling');
+               $.ajax({
+                     url: 'http://' + server_name + '/php/server.php'
+                  }).done(function(data){
+                     if (last_data !== data) {
+                           $('#main').html(data);
+                           last_data = data;
+                        }
+
+                        setTimeout(poll_page, 1000);
+               });
+         }
+         $(function(){
+               poll_page();
+         });
+      </script>
+   </body>
+</html>
